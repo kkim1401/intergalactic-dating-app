@@ -25,9 +25,13 @@ function capitalizeFirstLetter(string) {
 
 function SearchProfile() {
   const { userId } = useParams();
-  const { data: profile, isFetching, error } = useQuery(pick.queryKey, () => pick({ id: userId }));
+  const {
+    data: profile,
+    isLoading,
+    error,
+  } = useQuery([pick.queryKey, userId], () => pick({ id: userId }));
 
-  if (isFetching) return <LoadingOrError as={Spinner} />;
+  if (isLoading) return <LoadingOrError as={Spinner} />;
 
   if (error) return <LoadingOrError>An error has occurred: {error.message}</LoadingOrError>;
 
